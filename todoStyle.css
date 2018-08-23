@@ -6,13 +6,13 @@
 body{
 	font-family:Arial,Helvetica, sans-serif;
 }
-.todoReact {
+.todo-section__react {
     border-left: 2px solid #47525e;
     width: 50%;
     flex: 1;
 
 }
-.todoJS{
+.todo-section__javascript{
     width: 50%;
     flex: 1;
 }
@@ -24,26 +24,29 @@ body{
 	border-radius: 10px;
 	margin-bottom: 30px;
 }
-
-.title{
+.main-container__title{
 	display: flex;
 	justify-content: center;
-	font-size: 15px;
-	color: #47525e;
 	margin-top: 30px;
 	margin-bottom: 30px;
-
 }
-.todo_title_react{
+
+.title{
+	font-size: 25px;
+	color: #47525e;
+}
+.todo-title-react{
 	display: flex;
+	font-weight: normal;
 	justify-content: center;
 	font-family:Arial,Helvetica, sans-serif;
 	font-size: 25px;
 	color: #47525e;
 	margin-bottom: 20px;
 }
-.todo_title_js{
+.todo-title-js{
 	display: flex;
+	font-weight: normal;
 	justify-content: center;
 	font-family:Arial,Helvetica, sans-serif;
 	font-size: 25px;
@@ -51,7 +54,7 @@ body{
 	margin-bottom: 20px;
 	
 }
-.input {
+.input-form__input {
     width: 160px;
     font-size: 15px;
     padding: 5px 10px;
@@ -60,14 +63,14 @@ body{
     border-radius: 5px;
     opacity: 0.5;
 }
-.inputForm{
+.form-container__input-form{
 	margin-bottom: 20px;
 	display: flex;
 	justify-content: center;
 	text-align: center;
 }
 
-.btn {
+.input-form__btn{
     font-size: 15px;
     background-color: #47525e;
     color: #fff;
@@ -76,12 +79,15 @@ body{
     border-radius: 5px;
     margin-left: 10px;
 }
-.form_container{
+.form-container{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
-.container{
+.item{
+	margin-bottom: 10px;
+}
+.item__container{
 	margin-bottom: 15px;
 	color: #9ba4ae;
 }
@@ -115,32 +121,33 @@ body{
 	border-radius: 100%;
 }
 
-.flex_container{
+.todo-section{
 	display: flex;
 	justify-content: center;
 	flex:1 ;
 }
-.checkForm {
+.check-form {
     display: flex;
     flex-direction: column;
+    list-style-type: none;
     margin-right: 119px;
 }
 
 @media(max-width: 768px){
-	.todoReact {
+	.todo-section__react {
 		border-left-color:#fff; 
     	border-top: 2px solid #47525e;
     	border-radius: 2px;	
 
     	width: 100%;
 	}
-	.todo_title_react{
+	.todo-title-react{
 		margin-top: 20px;
 	}
-	.todoJS{
+	.todo-section__javascript{
     	width: 100%;
 	}
-	.flex_container{
+	.todo-section{
 		flex-direction: column;	
 	}
 }
