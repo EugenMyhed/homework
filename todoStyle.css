@@ -35,7 +35,7 @@ body{
 	font-size: 25px;
 	color: #47525e;
 }
-.todo-title-react{
+.todo-title__react{
 	display: flex;
 	font-weight: normal;
 	justify-content: center;
@@ -44,7 +44,7 @@ body{
 	color: #47525e;
 	margin-bottom: 20px;
 }
-.todo-title-js{
+.todo-title__js{
 	display: flex;
 	font-weight: normal;
 	justify-content: center;
@@ -84,10 +84,10 @@ body{
 	flex-direction: column;
 	align-items: center;
 }
-.item{
+.todo-list-item{
 	margin-bottom: 10px;
 }
-.item__container{
+.todo-list-item__container{
 	margin-bottom: 15px;
 	color: #9ba4ae;
 }
@@ -141,7 +141,7 @@ body{
 
     	width: 100%;
 	}
-	.todo-title-react{
+	.todo-title__react{
 		margin-top: 20px;
 	}
 	.todo-section__javascript{
