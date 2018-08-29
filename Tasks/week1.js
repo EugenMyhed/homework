@@ -44,11 +44,11 @@ null == 0;         // false null >= 0, але нулю не дорівнює
         
        };
        
-var myFunctionMap = array => {
+var squareArrayValuesMap = array => {
     var res = array.map( value => value * value );
      return res;
 }
-var myFunctionForEach = array =>{
+var squareArrayValuesForEach = array =>{
     var res = [];
     array.forEach(value => res.push(value * value));
     return res;
@@ -57,12 +57,14 @@ var myFunctionForEach = array =>{
 var getName = obj => {
     var names = [];
     for(var room in obj){
-         obj[room].forEach(value => names.push(value.name));
+        if(obj.hasOwnProperty(room)){
+             obj[room].forEach(value => names.push(value.name));
+        }
     }
     return names;
 }
   
-console.log("Map: " + myFunctionMap(arr));
-console.log("forEach: " + myFunctionForEach(arr));
+console.log("Map: " + squareArrayValuesMap(arr));
+console.log("forEach: " + squareArrayValuesForEach(arr));
 console.log(getName(rooms));
   
