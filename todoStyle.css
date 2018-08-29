@@ -35,7 +35,7 @@ body{
 	font-size: 25px;
 	color: #47525e;
 }
-.todo-title__react{
+.todo-title_reactjs{
 	display: flex;
 	font-weight: normal;
 	justify-content: center;
@@ -44,7 +44,7 @@ body{
 	color: #47525e;
 	margin-bottom: 20px;
 }
-.todo-title__js{
+.todo-title_js{
 	display: flex;
 	font-weight: normal;
 	justify-content: center;
@@ -141,7 +141,7 @@ body{
 
     	width: 100%;
 	}
-	.todo-title__react{
+	.todo-title_react{
 		margin-top: 20px;
 	}
 	.todo-section__javascript{
