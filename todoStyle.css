@@ -85,7 +85,8 @@ body{
 	align-items: center;
 }
 .todo-list-item{
-	margin-bottom: 10px;
+	display: flex;
+    justify-content: space-between;
 }
 .todo-list-item__container{
 	margin-bottom: 15px;
@@ -107,18 +108,19 @@ body{
 	vertical-align: middle;
 }
 .checkbox-custom,.label:hover{
+	margin-right: 10px;
 	cursor: pointer;
 }
 .checkbox:checked + .checkbox-custom::before {
-	content: "";            
-	display: block;			 
-	position: absolute;      
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-	left: 0px;
-	border:6px solid #47525e;   
-	border-radius: 100%;
+	content: "";
+    display: block;
+    position: absolute;
+    top: -0.5px;
+    right: -0.5px;
+    bottom: -0.5px;
+    left: -0.5px;
+    border: 6px solid #47525e;
+    border-radius: 100%;
 }
 
 .todo-section{
@@ -127,10 +129,41 @@ body{
 	flex:1 ;
 }
 .check-form {
+    width: 38%;
     display: flex;
     flex-direction: column;
     list-style-type: none;
-    margin-right: 119px;
+}
+.close {
+    color: darkturquoise;
+	font-size: 20px;
+	cursor: pointer;
+}
+.checked-form__hide{
+	font-size: 15px;
+    background-color: #47525e;
+    color: #fff;
+    border: 1px solid #47525e;
+    padding: 5px 22px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+.checked-form__show{
+	font-size: 15px;
+    background-color: #47525e;
+    color: #fff;
+    border: 1px solid #47525e;
+    padding: 5px 22px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+.check-form-second{
+	width: 38%;
+    display: flex;
+    flex-direction: column;
+	list-style-type: none;
+	margin-top: 10px;
+	
 }
 
 @media(max-width: 768px){
@@ -141,6 +174,7 @@ body{
 
     	width: 100%;
 	}
+	
 	.todo-title_reactjs{
 		margin-top: 20px;
 	}

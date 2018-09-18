@@ -14,48 +14,19 @@
 				<h2 class="todo-title_js">Pure JavaScript</h2>
 					<div class="form-container">
 						<div class="form-container__input-form input-form">
-							<form>
+							<form onsubmit="event.preventDefault()">
 								<input class="input-form__input" type="text" placeholder="What to do?">
-								<button class="input-form__btn">Button</button>
+								<button type='button' class="input-form__btn">Button</button>
 							</form>
 						</div>
-						<ul class="check-form">
-							<li class="check-form__todo-list-item todo-list-item">
-								<label for="task1" class="todo-list-item__container">
-									<input id="task1" class="checkbox" type="checkbox">
-									<span class="checkbox-custom"></span>
-									<span class="label">This is a list item</span>
-								</label>
-							</li>
-							<li class="check-form__todo-list-item todo-list-item">
-								<label for="task2" class="todo-list-item__container">
-									<input id="task2" class="checkbox" type="checkbox">
-									<span class="checkbox-custom"></span>
-									<span class="label">Another list item</span>
-								</label>
-							</li >
-							<li class="check-form__todo-list-item todo-list-item">
-							    <label for="task3" class="todo-list-item__container">
-									<input id="task3" class="checkbox" type="checkbox">
-									<span class="checkbox-custom"></span>
-									<span class="label">Yup, another list item</span>
-								</label>
-							</li>
-							<li class="check-form__todo-list-item todo-list-item">
-								<label for="task4" class="todo-list-item__container">
-									<input id="task4" class="checkbox" type="checkbox">
-									<span class="checkbox-custom"></span>
-									<span class="label">Another list item</span>
-								</label>
-							</li>
-							<li class="check-form__todo-list-item todo-list-item">
-								<label for="task5" class="todo-list-item__container">
-									<input id="task5" class="checkbox" type="checkbox">
-									<span class="checkbox-custom"></span>
-									<span class="label">This is a list item</span>
-								</label>
-							</li>
-						</ul>
+						<ul class="check-form"></ul>
+
+						<div class="form-container__checked-form checked-form">
+							<button class="checked-form__hide" type='button'>Hide Finished Items</button>
+							<button class="checked-form__show" type='button'>Show Finished Items</button>
+						</div>
+						
+						<ul class="check-form-second"></ul>
 					</div>
 				</div>
 			<div class="todo-section__react">
@@ -63,5 +34,6 @@
 			</div>
 		</div>
 	</section>
+	<script src="./index.js"></script>
 </body>
 </html>
