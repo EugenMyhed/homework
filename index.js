@@ -31,7 +31,7 @@ const createListItem = (text) => {
 
     spanText.innerHTML = text;
 
-    close.addEventListener('click', () => item.innerHTML = '' , false);
+    close.addEventListener('click', () => item.remove() , false);
 
     input.addEventListener('change',() => {
         ulChecked.insertBefore(item, ulChecked.firstChild);
@@ -60,6 +60,9 @@ btn.addEventListener('click', ()  => {
 
 showBtn.addEventListener('click', () => {
     checkedList.style.display = 'block';
+    axios.get("https://learn-front-end-api-212606.appspot.com/api/v1/todos")
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err));
 }, false);
 
 hideBtn.addEventListener('click', () => {
