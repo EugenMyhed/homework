@@ -4,8 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>TODO List</title>
-	<link rel="stylesheet" href="todoStyle.css">
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>	
+	<link rel="stylesheet" href="./dist/main.css"> 
 </head>
 <body>
 	<section class="main-container">
@@ -20,7 +19,7 @@
 								<button type='button' class="input-form__btn">Button</button>
 							</form>
 						</div>
-						<ul class="check-form"></ul>
+						<ul class="check-form" id="task_list"></ul>
 
 						<div class="form-container__checked-form checked-form">
 							<button class="checked-form__hide" type='button'>Hide Finished Items</button>
@@ -32,14 +31,10 @@
 				</div>
 			<div class="todo-section__react">
 				<h3 class="todo-title_reactjs">ReactJS</h3>
-			</div>
+			</div> 	
 		</div>
 	</section>
-	<script src="./index.js"></script>	
-	<!--<script src="./helpers.js"></script>
-	<script src="./list-item.js"></script>
-	<script src="./create-list-item.js"></script>
-	<script src="./hide-list.js"></script>
-	<script src="./show-list.js"></script>-->
+	<script src= "./dist/bundle.js" ></script>
+	
 </body>
 </html>
