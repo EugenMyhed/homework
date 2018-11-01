@@ -32,17 +32,17 @@ export const createListItem = (todo) => {
     item.appendChild(close);
     close.innerHTML = '&times;';
     
-    
-
-    if(todo.text === '')
+    if(todo.text === ''){
         spanText.innerHTML = 'Create some task';
-    else
+    }
+    else{
         spanText.innerHTML = todo.text;
+    }
 
     close.addEventListener('click', () => {
         axios.delete("https://learn-front-end-api-212606.appspot.com/api/v1/todos/"+todo.id)
-        .then((el) => {
-            if(el.data.success){
+        .then((response) => {
+            if(response.data.success){
                 item.remove();
             }
             else
@@ -56,10 +56,10 @@ export const createListItem = (todo) => {
             text: todo.text,
             done: e.target.checked
         })
-        .then((el) =>{
-            if(el.data.success){
-                console.log(el.data);
-                if(el.data.todo.done){
+        .then((response) =>{
+            if(response.data.success){
+                console.log(response.data);
+                if(response.data.todo.done){
                     ulChecked.insertBefore(item, ulChecked.firstChild);
                     spanText.style.textDecoration = 'line-through';
                 }
@@ -73,14 +73,6 @@ export const createListItem = (todo) => {
         })
         .catch((err) => console.log(err))
     }, false);
-    
-
-        btn.addEventListener('', () => {
-            /*axios.post("https://learn-front-end-api-212606.appspot.com/api/v1/todos?id=task_list",
-                {
-                    text: inpText.value,
-                });*/
-        }, false);
     
 
     ulCount.insertBefore(item, ulCount.firstChild);

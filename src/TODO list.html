@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>TODO List</title>
+	<link rel="stylesheet" href="../dist/main.css"> 
+</head>
+<body>
+	<section class="main-container">
+		<h1 class="main-container__title title">TODO List</h1>
+		<div class="todo-section">
+			<div class="todo-section__javascript">
+				<h2 class="todo-title_js">Pure JavaScript</h2>
+				
+					<div class="form-container">
+						<div class="form-container__list">
+							<div class="form-container__input-form input-form">
+								<form onsubmit="event.preventDefault()">
+									<input class="input-form__input" type="text" placeholder="What to do?">
+									<button type='button' class="input-form__btn">Button</button>
+								</form>
+							</div>
+							<ul class="check-form" id="task_list"></ul>
+
+							<div class="form-container__checked-form checked-form">
+								<button class="checked-form__hide" type='button'>Hide Finished Items</button>
+								<button class="checked-form__show" type='button'>Show Finished Items</button>
+							</div>
+							
+							<ul class="check-form-second"></ul>
+						</div>
+					</div>
+				</div>
+				
+			<div class="todo-section__react">
+				<h3 class="todo-title_reactjs">ReactJS</h3>
+				<div id="root" class="form-container">
+					
+				</div>
+			</div> 	
+		</div>
+	</section>
+
+	<script src= "../dist/bundle.js" ></script>
+</body>
+</html>

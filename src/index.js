@@ -1,21 +1,23 @@
-import {createLi} from "./create-list-item.js";
+import {initApp} from "./create-list-item.js";
 import {createListItem} from "./helpers.js"
-import hdBtn from "./hide-list.js";
-import shBtn from "./show-list.js";
+import hideFinishedTodos from "./hide-list.js";
+import showTodos from "./show-list.js";
+import './components/App';
 import axios from "axios"
-import "./todoStyle.css";
+import "./styles/todoStyle.css";
+import "./styles/style-react.css"
 
 
    window.addEventListener("load", () =>{
 
-        createLi();
-        hdBtn();
-        shBtn();
+        initApp();
+        hideFinishedTodos();
+        showTodos();
         
         axios.get("https://learn-front-end-api-212606.appspot.com/api/v1/todos?id=task_list")
-        .then((el) => {
-            if(el.data.success)
-                el.data.todos.forEach((obj) => createListItem(obj) );
+        .then((response) => {
+            if(response.data.success)
+            response.data.todos.forEach((obj) => createListItem(obj) );
             else
                 console.log("Error");
         })
