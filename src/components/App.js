@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
-import InputTextArea from "./InputTextArea";
-import AddTextButton from "./AddTextButton";
+import FormContainer from "./FormContainer"
+import TodoListContainer from "./TodoListContainer"
 import TodosList from "./TodosList";
 import ResultBtn from "./ResultBtn";
 import axios from "axios";
@@ -33,9 +33,14 @@ export default class App extends Component{
         
         axios.get("https://learn-front-end-api-212606.appspot.com/api/v1/todos")
         .then((response) => {
-            console.log(response )
-            const todoArray = response.data.todos;
-            this.setState({ todos: todoArray})
+            if(response.data.success){
+                const todoArray = response.data.todos;
+                this.setState({ todos: todoArray})
+            }
+            else{
+                console.log("Error!")
+            }
+            
         })
             
         .catch((err) => console.log(err))
@@ -44,16 +49,18 @@ export default class App extends Component{
     
     createTask(){
         const textArea = document.getElementsByClassName('input-form__input-react')[0];
-        console.log(textArea)
         axios.post("https://learn-front-end-api-212606.appspot.com/api/v1/todos", {
                 text: textArea.value
         })
         .then( response => {
-            const todo = response.data.todo;
-            console.log(todo)
-            const newArray = [todo, ... this.state.todos];
-            
-            this.setState({ todos: newArray })
+            if(response.data.success){
+                const todo = response.data.todo;
+                const newArray = [todo, ... this.state.todos];
+                this.setState({ todos: newArray })
+            }
+            else{
+                console.log("Error!")
+            }
 
         })
         .catch(err => console.log(err))
@@ -63,11 +70,16 @@ export default class App extends Component{
     deleteTask(id, el){
         axios.delete("https://learn-front-end-api-212606.appspot.com/api/v1/todos/" + id)
         .then(response =>{
-            console.log(response.data)
-            const numElement = this.state.todos.indexOf(el);
-            const taskList = this.state.todos;
-            taskList.splice(numElement, 1);
-            this.setState({ todos: taskList });
+            if(response.data.success){
+                const numElement = this.state.todos.indexOf(el);
+                const taskList = this.state.todos;
+                taskList.splice(numElement, 1);
+                this.setState({ todos: taskList });
+            }
+            else{
+                console.log("Error!")
+            }
+           
         })
         
     }
@@ -76,7 +88,7 @@ export default class App extends Component{
         const checkboxState = event.target.checked;
         this.setState({ isChecked: checkboxState })
         console.log(this.state.isChecked)
-        console.log(val)
+        //console.log(val)
     }
 
     updateTask( id, text, el){
@@ -91,18 +103,12 @@ export default class App extends Component{
     render(){
         return(
             <div>
-                <form onSubmit={this.handleSubmit} className="form-container__input-form input-form">
-                    <InputTextArea/>
-                    <AddTextButton postData={this.createTask} />
-                </form>
-                <ul className="check-form-react">
-                    {this.state.todos.map((val) => <TodosList handleChb={this.handleCheckbox}  updateData={() => this.updateTask(val.id, val.text, val)} 
-                     deleteData={() =>this.deleteTask(val.id, val)}  text={val.text} id={val.id} key={val.id} />)}
-                </ul>
+                <FormContainer restPostData={this.createTask}/>
+
+                <TodoListContainer helpers={this.handleCheckbox} restPutData={this.updateTask} restDeleteData={this.deleteTask} todosList={this.state.todos} />
+
                 <ResultBtn/>
-                <ul className="checked-form-react">
-                    
-                </ul>
+                
             </div>
         );
     }
