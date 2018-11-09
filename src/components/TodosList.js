@@ -6,15 +6,15 @@ export default class TodosList extends Component{
 
     
     render(props){
-        const { text} = this.props;
+        const { text, deleteData, id, updateData, handleChb } = this.props;
         return(
-            <li className="todo-list-item-react">
-                <label htmlFor="task-react1" className="todo-list-item-react__container">
-                    <input id="task-react1" className="checkbox-react" type="checkbox"/>
+            <li  className="todo-list-item-react">
+                <label htmlFor={id} className="todo-list-item-react__container">
+                    <input onChange={handleChb} id={id} className="checkbox-react" type="checkbox"/>
                     <span className="checkbox-custom-react"></span>
                     <span className="label-react">{text}</span>
                 </label>
-                <span className="close-react">&times;</span>
+                <span onClick={deleteData} className="close-react">&times;</span>
 			</li>
         );
     }

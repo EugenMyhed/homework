@@ -10,7 +10,7 @@ export default class InputForm extends Component{
 
     render(){
         return(
-            <input className="input-form__input" type="text" placeholder="What to do?" />
+            <input className="input-form__input-react" type="text" placeholder="What to do?" />
         );
     }
 }

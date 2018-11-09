@@ -5,9 +5,9 @@ import axios from "axios";
 export default class InputForm extends Component{
 
     render(props){
-        const {onAddText} = this.props;
+        const {postData} = this.props;
         return(
-            <button  className="input-form__btn" >Button</button>
+            <button onClick={postData}  className="input-form__btn-react" >Button</button>
         );
     }
 }
