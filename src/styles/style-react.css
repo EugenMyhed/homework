@@ -36,11 +36,11 @@
 	border: 2px solid #47525e;
 	border-radius: 100%;
 }
-.checkbox-custom-react,.label-react {
+.checkbox-custom-react,.task-text {
 	display: inline-block;
 	vertical-align: middle;
 }
-.checkbox-custom-react,.label-react:hover{
+.checkbox-custom-react,.task-text:hover{
 	margin-right: 10px;
 	cursor: pointer;
 }
@@ -64,6 +64,7 @@
     justify-content: space-between;
 }
 .check-form-react {
+    margin-top: 15px;
     width: 75%;
     display: flex;
     flex-direction: column;
@@ -92,4 +93,7 @@
     padding: 5px 22px;
     border-radius: 5px;
     margin-left: 10px;
+}
+.task-text_done{
+    text-decoration: line-through
 }

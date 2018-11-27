@@ -1,20 +1,10 @@
-import React, {Component} from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import AddTextButton from "./AddTextButton";
 
-export default class FormContainer extends Component{
-      
-    handleSubmit (event) {
-        event.preventDefault();
-    }
-    
-    render(){
-       
-        return(
-           <form onSubmit={this.handleSubmit} className="form-container__input-form input-form">
-                <input className="input-form__input-react" type="text" placeholder="What to do?" />
-                <AddTextButton postData={this.props.restPostData} />
+const FormContainer = ({restPostData, onValueChange, handleButton}) => (
+           <form onSubmit={handleButton} className="form-container__input-form input-form">
+                <input onChange={onValueChange} className="input-form__input-react" type="text" placeholder="What to do?" />
+                <AddTextButton postData={(event) =>restPostData(event)} />
            </form>
         );
-    }
-}
+export default FormContainer;

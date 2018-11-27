@@ -1,11 +1,9 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
 import FormContainer from "./FormContainer"
-import TodoListContainer from "./TodoListContainer"
-import TodosList from "./TodosList";
-import ResultBtn from "./ResultBtn";
+import TaskList from "./TaskList"
+import ActionBtn from "./ActionBtn";
 import axios from "axios";
-
 export default class App extends Component{
 
     constructor(props) {
@@ -13,14 +11,13 @@ export default class App extends Component{
 
         this.state = {
             todos: [],
-            isChecked: false
-
+            taskText: ''
         };
 
         this.createTask = this.createTask.bind(this);
         this.deleteTask = this.deleteTask.bind(this);
         this.updateTask = this.updateTask.bind(this);
-        this.handleCheckbox = this.handleCheckbox.bind(this);
+        this.onInputChange = this.onInputChange.bind(this);
     
       }
 
@@ -36,6 +33,7 @@ export default class App extends Component{
             if(response.data.success){
                 const todoArray = response.data.todos;
                 this.setState({ todos: todoArray})
+                
             }
             else{
                 console.log("Error!")
@@ -48,15 +46,16 @@ export default class App extends Component{
     }
     
     createTask(){
-        const textArea = document.getElementsByClassName('input-form__input-react')[0];
         axios.post("https://learn-front-end-api-212606.appspot.com/api/v1/todos", {
-                text: textArea.value
+                text: this.state.taskText
         })
         .then( response => {
             if(response.data.success){
                 const todo = response.data.todo;
                 const newArray = [todo, ... this.state.todos];
-                this.setState({ todos: newArray })
+
+                this.setState({todos: newArray})
+
             }
             else{
                 console.log("Error!")
@@ -67,14 +66,19 @@ export default class App extends Component{
     
     }
 
-    deleteTask(id, el){
-        axios.delete("https://learn-front-end-api-212606.appspot.com/api/v1/todos/" + id)
+    deleteTask(el){
+        axios.delete("https://learn-front-end-api-212606.appspot.com/api/v1/todos/" + el.id)
         .then(response =>{
             if(response.data.success){
-                const numElement = this.state.todos.indexOf(el);
                 const taskList = this.state.todos;
-                taskList.splice(numElement, 1);
-                this.setState({ todos: taskList });
+                const newArray = taskList.filter( (element) => {
+                    if(element.id !== el.id){ 
+                        return element;
+                    }
+                })
+
+                this.setState({ todos: newArray});
+
             }
             else{
                 console.log("Error!")
@@ -84,30 +88,69 @@ export default class App extends Component{
         
     }
 
-    handleCheckbox(event, val){
-        const checkboxState = event.target.checked;
-        this.setState({ isChecked: checkboxState })
-        console.log(this.state.isChecked)
-        //console.log(val)
+   updateTask(event, el){
+         axios.put("https://learn-front-end-api-212606.appspot.com/api/v1/todos/" + el.id,{
+            text: el.text, 
+            done: event.target.checked
+        })
+        .then((response) => {
+            
+            if(response.data.success){
+                const newArray = this.state.todos.filter( (element) => {
+                    if(element.id !== response.data.todo.id){ 
+                        return element;
+                    }
+                })
+
+                const newElement = response.data.todo;
+                const resultArray = [newElement, ...newArray]
+                
+                this.setState({ todos: resultArray }) 
+                
+            }   
+           
+        })
+
+        .catch(err => console.log(err))
+        
     }
 
-    updateTask( id, text, el){
-        /*axios.put("https://learn-front-end-api-212606.appspot.com/api/v1/todos/" + id,{
-            text: text, 
-            done: this.state.isChecked
-        })*/
-        
+    onInputChange(event){
+            this.setState({ taskText: event.target.value})
     }
     
 
     render(){
+        const uncheckedArrayList = this.state.todos.filter( (element) => {
+            if(element.done !== true){ 
+                return element;
+            }
+        })
+
+        const checkedArrayList = this.state.todos.filter( (element) => {
+            if(element.done !== false){
+                return element;
+            }
+        })
+        
+
         return(
             <div>
-                <FormContainer restPostData={this.createTask}/>
+                <FormContainer onValueChange={this.onInputChange} handleButton={this.handleSubmit} restPostData={this.createTask} />
 
-                <TodoListContainer helpers={this.handleCheckbox} restPutData={this.updateTask} restDeleteData={this.deleteTask} todosList={this.state.todos} />
+                <TaskList helpers={this.handleCheckbox} 
+                    restPutData={this.updateTask} 
+                    restDeleteData={this.deleteTask} 
+                    todosList={uncheckedArrayList} 
+                />
 
-                <ResultBtn/>
+                <ActionBtn />
+
+                <TaskList helpers={this.handleCheckbox} 
+                    restPutData={this.updateTask} 
+                    restDeleteData={this.deleteTask} 
+                    todosList={checkedArrayList} 
+                />
                 
             </div>
         );
