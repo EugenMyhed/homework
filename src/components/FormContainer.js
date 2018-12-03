@@ -1,10 +1,9 @@
 import React from "react";
-import AddTextButton from "./AddTextButton";
 
-const FormContainer = ({restPostData, onValueChange, handleButton}) => (
-           <form onSubmit={handleButton} className="form-container__input-form input-form">
-                <input onChange={onValueChange} className="input-form__input-react" type="text" placeholder="What to do?" />
-                <AddTextButton postData={(event) =>restPostData(event)} />
+const FormContainer = ({onSubmit, onValueChange}) => (
+           <form className="form-container__input-form input-form">
+                <input onChange={(event) => onValueChange(event.target.value)} className="input-form__input-react" type="text" placeholder="What to do?" />
+                <button onClick={(event) => onSubmit(event)}  className="input-form__btn-react" >Button</button>
            </form>
         );
 export default FormContainer;

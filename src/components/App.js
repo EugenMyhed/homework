@@ -11,20 +11,18 @@ export default class App extends Component{
 
         this.state = {
             todos: [],
-            taskText: ''
+            taskText: '', 
+            isVisible: true
         };
 
         this.createTask = this.createTask.bind(this);
         this.deleteTask = this.deleteTask.bind(this);
         this.updateTask = this.updateTask.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
+        this.hideTaskList = this.hideTaskList.bind(this);
+        this.showTaskList = this.showTaskList.bind(this);
     
       }
-
-
-    handleSubmit (event) {
-        event.preventDefault();
-    }
 
     componentDidMount(){
         
@@ -45,18 +43,34 @@ export default class App extends Component{
         
     }
     
-    createTask(){
+    createTask(event){
+        event.preventDefault();
+
         axios.post("https://learn-front-end-api-212606.appspot.com/api/v1/todos", {
                 text: this.state.taskText
         })
         .then( response => {
             if(response.data.success){
+                axios.get("https://learn-front-end-api-212606.appspot.com/api/v1/todos")
+                .then((response) =>{
+                    if(response.data.success){
+                        this.setState({ todos: response.data.todos})
+                    }
+
+                    else{
+                        console.log("Error!")
+                    }
+                })
+                .catch(err => console.log(err))
+            }
+
+            /*if(response.data.success){
                 const todo = response.data.todo;
                 const newArray = [todo, ... this.state.todos];
 
                 this.setState({todos: newArray})
 
-            }
+            }*/
             else{
                 console.log("Error!")
             }
@@ -70,6 +84,21 @@ export default class App extends Component{
         axios.delete("https://learn-front-end-api-212606.appspot.com/api/v1/todos/" + el.id)
         .then(response =>{
             if(response.data.success){
+                axios.get("https://learn-front-end-api-212606.appspot.com/api/v1/todos")
+                    .then((response) =>{
+                        if(response.data.success){
+
+                            this.setState({ todos: response.data.todos});
+
+                        }
+
+                        else{
+                            console.log("Error!");
+                        }
+                    })
+                    .catch(err => console.log(err))
+            }
+            /*if(response.data.success){
                 const taskList = this.state.todos;
                 const newArray = taskList.filter( (element) => {
                     if(element.id !== el.id){ 
@@ -79,7 +108,7 @@ export default class App extends Component{
 
                 this.setState({ todos: newArray});
 
-            }
+            }*/
             else{
                 console.log("Error!")
             }
@@ -94,8 +123,22 @@ export default class App extends Component{
             done: event.target.checked
         })
         .then((response) => {
-            
+
             if(response.data.success){
+                axios.get("https://learn-front-end-api-212606.appspot.com/api/v1/todos")
+                .then((response) =>{
+                    if(response.data.success){
+                        this.setState({ todos: response.data.todos})
+                    }
+
+                    else{
+                        console.log("Error!")
+                    }
+                })
+                .catch(err => console.log(err))
+            }
+            
+            /*if(response.data.success){
                 const newArray = this.state.todos.filter( (element) => {
                     if(element.id !== response.data.todo.id){ 
                         return element;
@@ -107,18 +150,27 @@ export default class App extends Component{
                 
                 this.setState({ todos: resultArray }) 
                 
-            }   
-           
+            }*/ 
+            else{
+                console.log("Error!")
+            }
         })
 
         .catch(err => console.log(err))
         
     }
 
-    onInputChange(event){
-            this.setState({ taskText: event.target.value})
+    onInputChange(taskText){
+            this.setState({ taskText: taskText})
+    }
+
+    hideTaskList(){
+        this.setState({isVisible: false})
     }
     
+    showTaskList(){
+        this.setState({isVisible: true})
+    }
 
     render(){
         const uncheckedArrayList = this.state.todos.filter( (element) => {
@@ -133,23 +185,24 @@ export default class App extends Component{
             }
         })
         
-
         return(
             <div>
-                <FormContainer onValueChange={this.onInputChange} handleButton={this.handleSubmit} restPostData={this.createTask} />
+                <FormContainer onValueChange={this.onInputChange} onSubmit={this.createTask} />
 
                 <TaskList helpers={this.handleCheckbox} 
-                    restPutData={this.updateTask} 
-                    restDeleteData={this.deleteTask} 
-                    todosList={uncheckedArrayList} 
+                    onTaskUpdate ={this.updateTask} 
+                    onTaskDelete={this.deleteTask} 
+                    todosList={uncheckedArrayList}
+                    isVisible={true}
                 />
 
-                <ActionBtn />
+                <ActionBtn handleShowButton={this.showTaskList} handleHideButton={this.hideTaskList} />
 
                 <TaskList helpers={this.handleCheckbox} 
-                    restPutData={this.updateTask} 
-                    restDeleteData={this.deleteTask} 
+                    onTaskUpdate ={this.updateTask} 
+                    onTaskDelete={this.deleteTask} 
                     todosList={checkedArrayList} 
+                    isVisible={this.state.isVisible}
                 />
                 
             </div>
