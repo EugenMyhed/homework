@@ -1,6 +1,6 @@
 import React from "react";
 
-const TodosList = ({textTask, idTask, done, element, deleteData, updateData}) => (
+const TaskListItem = ({textTask, idTask, done, element, deleteData, updateData}) => (
             <li  className="todo-list-item-react">
                 <label htmlFor={idTask} className="todo-list-item-react__container">
                     <input onChange={updateData} id={idTask}  className="checkbox-react" type="checkbox" checked={done}/>
@@ -10,4 +10,4 @@ const TodosList = ({textTask, idTask, done, element, deleteData, updateData}) =>
                 <span onClick={deleteData} className="close-react">&times;</span>
 			</li>
         );
-export default TodosList;
+export default TaskListItem;

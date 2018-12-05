@@ -65,11 +65,9 @@
 }
 .check-form-react {
     margin-top: 15px;
-    width: 75%;
     display: flex;
     flex-direction: column;
     list-style-type: none;
-    margin-left: 50px;
 }
 .close-react {
     color: darkturquoise;
@@ -81,7 +79,7 @@
     background-color: #47525e;
     color: #fff;
     border: 1px solid #47525e;
-    padding: 5px 22px;
+    padding: 5px 35px;
     border-radius: 5px;
     margin-left: 10px;
 }
@@ -96,4 +94,8 @@
 }
 .task-text_done{
     text-decoration: line-through
+}
+.checked-form-react{
+    display: flex;
+    justify-content: center;
 }

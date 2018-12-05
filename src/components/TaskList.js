@@ -1,5 +1,5 @@
 import React from "react";
-import TodosList from "./TodosList"
+import TaskListItem from "./TaskListItem"
 
 
     const TaskList = ({todosList, onTaskUpdate , onTaskDelete, isVisible}) => {
@@ -7,7 +7,7 @@ import TodosList from "./TodosList"
                 return(
                         <ul className = "check-form-react" > 
                               {
-                                    todosList.slice().reverse().map((el) => <TodosList  element={el}
+                                    todosList.slice().reverse().map((el) => <TaskListItem  element={el}
                                     updateData={(event) => onTaskUpdate (event, el)}
                                     deleteData={() => onTaskDelete(el)} 
                                     textTask={el.text} idTask={el.id} done={el.done} key={el.id} />)
