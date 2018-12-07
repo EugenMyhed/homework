@@ -7,6 +7,11 @@ export default class FormContainer extends Component{
                taskText: ''
           }
           this.onInputChange = this.onInputChange.bind(this);
+          this.handleSubmit = this.handleSubmit.bind(this);
+     }
+
+     handleSubmit(event){
+          event.preventDefault();
      }
 
      onInputChange(event){
@@ -15,9 +20,18 @@ export default class FormContainer extends Component{
 
      render(){
           return(
-               <form className="form-container__input-form input-form">
-                    <input onChange={(event) => this.onInputChange(event)} className="input-form__input-react" type="text" placeholder="What to do?" />
-                    <button onClick={(event) => this.props.onSubmit(event, this.state.taskText)}  className="input-form__btn-react" >Button</button>
+               <form onSubmit={this.handleSubmit} className="form-container__input-form input-form">
+                    <input 
+                         onChange={(event) => this.onInputChange(event)} 
+                         className="input-form__input-react" 
+                         type="text" 
+                         placeholder="What to do?" />
+                    <button 
+                         type="submit"
+                         onClick={() => this.props.onSubmit(this.state.taskText)}
+                         className="input-form__btn-react" >
+                         Button
+                    </button>
                </form>
           )
      }
