@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
+import URL from "./config"
 import FormContainer from "./FormContainer"
 import TaskList from "./TaskList"
-import ActionBtn from "./ActionBtn";
+import ToggleFinishedTasksVisibility from "./ToggleFinishedTasksVisibility";
 import axios from "axios";
 export default class App extends Component{
 
@@ -21,7 +22,7 @@ export default class App extends Component{
       }
 
     componentDidMount(){
-        axios.get("https://learn-front-end-api-212606.appspot.com/api/v1/todos")
+        axios.get(URL)
         .then((response) => {
             if(response.data.success){
                 const todoArray = response.data.todos;
@@ -34,15 +35,13 @@ export default class App extends Component{
         .catch((err) => console.log(err))
     }
     
-    createTask(event, taskText){
-        event.preventDefault();
-
-        axios.post("https://learn-front-end-api-212606.appspot.com/api/v1/todos", {
+    createTask(taskText){
+        axios.post(URL, {
                 text: taskText
         })
         .then( response => {
             if(response.data.success){
-                axios.get("https://learn-front-end-api-212606.appspot.com/api/v1/todos")
+                axios.get(URL)
                 .then((response) =>{
                     if(response.data.success){
                         this.setState({ todos: response.data.todos})
@@ -69,10 +68,10 @@ export default class App extends Component{
     }
 
     deleteTask(el){
-        axios.delete("https://learn-front-end-api-212606.appspot.com/api/v1/todos/" + el.id)
+        axios.delete(URL + el.id)
         .then(response =>{
             if(response.data.success){
-                axios.get("https://learn-front-end-api-212606.appspot.com/api/v1/todos")
+                axios.get(URL)
                     .then((response) =>{
                         if(response.data.success){
                             this.setState({ todos: response.data.todos});
@@ -99,14 +98,14 @@ export default class App extends Component{
     }
 
    updateTask(event, el){
-         axios.put("https://learn-front-end-api-212606.appspot.com/api/v1/todos/" + el.id,{
+         axios.put(URL + el.id,{
             text: el.text, 
             done: event.target.checked
         })
         .then((response) => {
 
             if(response.data.success){
-                axios.get("https://learn-front-end-api-212606.appspot.com/api/v1/todos")
+                axios.get(URL)
                 .then((response) =>{
                     if(response.data.success){
                         this.setState({ todos: response.data.todos})
@@ -162,16 +161,18 @@ export default class App extends Component{
             <div>
                 <FormContainer onSubmit={this.createTask} />
 
-                <TaskList helpers={this.handleCheckbox} 
+                <TaskList  
                     onTaskUpdate ={this.updateTask} 
                     onTaskDelete={this.deleteTask} 
                     todosList={uncheckedArrayList}
-                    isVisible={true}
+                    isVisible
                 />
 
-                <ActionBtn isVisible={this.state.isVisible} handlButton={this.handleListVisibility} />
+                <ToggleFinishedTasksVisibility 
+                    isVisible={this.state.isVisible}
+                    handlButton={this.handleListVisibility} />
 
-                <TaskList helpers={this.handleCheckbox} 
+                <TaskList 
                     onTaskUpdate ={this.updateTask} 
                     onTaskDelete={this.deleteTask} 
                     todosList={checkedArrayList} 
