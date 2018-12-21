@@ -22,7 +22,7 @@ export default class App extends Component{
       }
 
     componentDidMount(){
-        axios.get(URL)
+        axios.get(`${URL}/todos`)
         .then((response) => {
             if(response.data.success){
                 const todoArray = response.data.todos;
@@ -36,12 +36,12 @@ export default class App extends Component{
     }
     
     createTask(taskText){
-        axios.post(URL, {
+        axios.post(`${URL}/todos`, {
                 text: taskText
         })
         .then( response => {
             if(response.data.success){
-                axios.get(URL)
+                axios.get(`${URL}/todos`)
                 .then((response) =>{
                     if(response.data.success){
                         this.setState({ todos: response.data.todos})
@@ -68,10 +68,10 @@ export default class App extends Component{
     }
 
     deleteTask(el){
-        axios.delete(URL + el.id)
+        axios.delete(`${URL}/todos/${el.id}`)
         .then(response =>{
             if(response.data.success){
-                axios.get(URL)
+                axios.get(`${URL}/todos`)
                     .then((response) =>{
                         if(response.data.success){
                             this.setState({ todos: response.data.todos});
@@ -98,14 +98,14 @@ export default class App extends Component{
     }
 
    updateTask(event, el){
-         axios.put(URL + el.id,{
+         axios.put(`${URL}/todos${el.id}`,{
             text: el.text, 
             done: event.target.checked
         })
         .then((response) => {
 
             if(response.data.success){
-                axios.get(URL)
+                axios.get(`${URL}/todos`)
                 .then((response) =>{
                     if(response.data.success){
                         this.setState({ todos: response.data.todos})
@@ -170,7 +170,7 @@ export default class App extends Component{
 
                 <ToggleFinishedTasksVisibility 
                     isVisible={this.state.isVisible}
-                    handlButton={this.handleListVisibility} />
+                    toggleVisibility={this.handleListVisibility} />
 
                 <TaskList 
                     onTaskUpdate ={this.updateTask} 

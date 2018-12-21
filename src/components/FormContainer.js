@@ -27,6 +27,7 @@ export default class FormContainer extends Component{
                          type="text" 
                          placeholder="What to do?" />
                     <button 
+                         type="submit"
                          onClick={() => this.props.onSubmit(this.state.taskText)}
                          className="input-form__btn-react" >
                          Button
