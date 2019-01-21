@@ -1,11 +1,13 @@
 import React, {Component} from "react";
-import ReactDOM from "react-dom";
 import URL from "./config"
 import FormContainer from "./FormContainer"
 import TaskList from "./TaskList"
 import ToggleFinishedTasksVisibility from "./ToggleFinishedTasksVisibility";
 import axios from "axios";
-export default class App extends Component{
+import { connect } from 'react-redux'
+import {setTask, setTextBoxValue, setVisibilityFilter} from "../actions/index"
+
+class App extends Component{
 
     constructor(props) {
         super(props);
@@ -26,7 +28,8 @@ export default class App extends Component{
         .then((response) => {
             if(response.data.success){
                 const todoArray = response.data.todos;
-                this.setState({ todos: todoArray})
+                this.props.setTaskFunction(todoArray);
+        
             }
             else{
                 console.log("Error!")
@@ -35,16 +38,16 @@ export default class App extends Component{
         .catch((err) => console.log(err))
     }
     
-    createTask(taskText){
+    createTask(){
         axios.post(`${URL}/todos`, {
-                text: taskText
+                text: this.props.textBox
         })
         .then( response => {
             if(response.data.success){
                 axios.get(`${URL}/todos`)
                 .then((response) =>{
                     if(response.data.success){
-                        this.setState({ todos: response.data.todos})
+                        this.props.setTaskFunction(response.data.todos);
                     }
                     else{
                         console.log("Error!")
@@ -74,7 +77,7 @@ export default class App extends Component{
                 axios.get(`${URL}/todos`)
                     .then((response) =>{
                         if(response.data.success){
-                            this.setState({ todos: response.data.todos});
+                            this.props.setTaskFunction(response.data.todos);
                         }
                         else{
                             console.log("Error!");
@@ -98,7 +101,7 @@ export default class App extends Component{
     }
 
    updateTask(event, el){
-         axios.put(`${URL}/todos${el.id}`,{
+         axios.put(`${URL}/todos/${el.id}`,{
             text: el.text, 
             done: event.target.checked
         })
@@ -108,7 +111,7 @@ export default class App extends Component{
                 axios.get(`${URL}/todos`)
                 .then((response) =>{
                     if(response.data.success){
-                        this.setState({ todos: response.data.todos})
+                        this.props.setTaskFunction(response.data.todos);
                     }
 
                     else{
@@ -141,17 +144,16 @@ export default class App extends Component{
     }
 
     handleListVisibility(){
-        this.setState({isVisible: !this.state.isVisible})
+        this.props.setVisibility(!this.props.isVisible)
     }
 
     render(){
-        const uncheckedArrayList = this.state.todos.filter( (element) => {
+        const uncheckedArrayList = this.props.todos.filter( (element) => {
             if(element.done !== true){ 
                 return element;
             }
         })
-
-        const checkedArrayList = this.state.todos.filter( (element) => {
+        const checkedArrayList = this.props.todos.filter( (element) => {
             if(element.done !== false){
                 return element;
             }
@@ -159,7 +161,7 @@ export default class App extends Component{
         
         return(
             <div>
-                <FormContainer onSubmit={this.createTask} />
+                <FormContainer onSubmit={this.createTask}  setTask={this.props.setTextFunction}/>
 
                 <TaskList  
                     onTaskUpdate ={this.updateTask} 
@@ -176,13 +178,34 @@ export default class App extends Component{
                     onTaskUpdate ={this.updateTask} 
                     onTaskDelete={this.deleteTask} 
                     todosList={checkedArrayList} 
-                    isVisible={this.state.isVisible}
+                    isVisible={this.props.isVisible}
                 />
-                
             </div>
         );
     }
 }
 
-ReactDOM.render(<App/> ,document.getElementById('root')
-);
+
+const mapStateToProps = (state) =>{
+    return {
+        isVisible: state.todoList.isVisible, 
+        textBox: state.todoList.textBox,
+        todos: state.todoList.todos
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setTextFunction: taskText =>{
+            dispatch(setTextBoxValue(taskText))
+        }, 
+        setTaskFunction: todoArray =>{
+            dispatch(setTask(todoArray))
+        },
+        setVisibility: isVisible =>{
+            dispatch(setVisibilityFilter(isVisible))
+        }
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
