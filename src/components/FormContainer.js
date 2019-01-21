@@ -15,7 +15,7 @@ export default class FormContainer extends Component{
      }
 
      onInputChange(event){
-          this.setState({taskText: event.target.value})
+          return this.props.setTask(event.target.value)
      }
 
      render(){
@@ -28,7 +28,7 @@ export default class FormContainer extends Component{
                          placeholder="What to do?" />
                     <button 
                          type="submit"
-                         onClick={() => this.props.onSubmit(this.state.taskText)}
+                         onClick={this.props.onSubmit}
                          className="input-form__btn-react" >
                          Button
                     </button>

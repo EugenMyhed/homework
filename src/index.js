@@ -2,7 +2,7 @@ import {initApp} from "./create-list-item.js";
 import {createListItem} from "./helpers.js"
 import hideFinishedTodos from "./hide-list.js";
 import showTodos from "./show-list.js";
-import './components/App';
+import './components/index'
 import axios from "axios"
 import "./styles/todoStyle.css";
 import "./styles/style-react.css"
